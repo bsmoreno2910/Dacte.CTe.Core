@@ -1,6 +1,6 @@
 ﻿# Contribuindo
 
-Obrigado pelo interesse em contribuir com o Cte.Core.
+Obrigado pelo interesse em contribuir com o Dacte.CTe.Core.
 
 ## Issues
 
@@ -16,7 +16,7 @@ Ao abrir uma issue, inclua:
 
 Antes de enviar um PR:
 
-- Rode `dotnet build Cte.Core.sln -c Release`.
+- Rode `dotnet build Dacte.CTe.Core.sln -c Release`.
 - Mantenha as alterações focadas em um único assunto.
 - Não inclua XMLs reais com dados fiscais ou dados pessoais.
 - Atualize README ou docs quando a mudança alterar o uso público.

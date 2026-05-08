@@ -1,7 +1,7 @@
-﻿# Cte.Core
+﻿# Dacte.CTe.Core
 
-![NuGet Version](https://img.shields.io/nuget/v/Cte.Core.svg)
-![NuGet Downloads](https://img.shields.io/nuget/dt/Cte.Core.svg)
+![NuGet Version](https://img.shields.io/nuget/v/Dacte.CTe.Core.svg)
+![NuGet Downloads](https://img.shields.io/nuget/dt/Dacte.CTe.Core.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Build](https://img.shields.io/badge/build-dotnet%20build-green.svg)
 
@@ -12,14 +12,14 @@ Gerador de **DACTE** em PDF para **CT-e modelo 57** a partir do XML processado (
 ## Instalação
 
 ```bash
-dotnet add package Cte.Core
+dotnet add package Dacte.CTe.Core
 ```
 
 ## Exemplo de uso
 
 ```csharp
-using Cte.Core;
-using Cte.Core.Modelo;
+using Dacte.CTe.Core;
+using Dacte.CTe.Core.Modelo;
 
 var modelo = DacteViewModelCreator.CriarDeArquivoXml("cte.xml");
 modelo.QuantidadeCanhotos = 1;
@@ -83,14 +83,14 @@ Quando o XML traz o grupo `IBSCBS`, o quadro de imposto usa o layout estendido c
 ## Sample
 
 ```bash
-dotnet run --project Cte.Core.Sample/Cte.Core.Sample.csproj -- <pasta-xmls> [pasta-saida] [caminho-logo.png]
+dotnet run --project Dacte.CTe.Core.Sample/Dacte.CTe.Core.Sample.csproj -- <pasta-xmls> [pasta-saida] [caminho-logo.png]
 ```
 
 Também é possível informar o logo por variável de ambiente:
 
 ```bash
-set CTE_CORE_SAMPLE_LOGO=C:\logos\minha-empresa.png
-dotnet run --project Cte.Core.Sample/Cte.Core.Sample.csproj -- C:\xmls C:\pdfs
+set DACTE_CTE_CORE_SAMPLE_LOGO=C:\logos\minha-empresa.png
+dotnet run --project Dacte.CTe.Core.Sample/Dacte.CTe.Core.Sample.csproj -- C:\xmls C:\pdfs
 ```
 
 ## Roadmap
@@ -103,8 +103,8 @@ dotnet run --project Cte.Core.Sample/Cte.Core.Sample.csproj -- C:\xmls C:\pdfs
 
 ```bash
 dotnet restore
-dotnet build Cte.Core.sln -c Release
-dotnet pack Cte.Core/Cte.Core.csproj -c Release
+dotnet build Dacte.CTe.Core.sln -c Release
+dotnet pack Dacte.CTe.Core/Dacte.CTe.Core.csproj -c Release
 ```
 
 ## Licença
