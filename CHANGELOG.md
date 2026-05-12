@@ -2,6 +2,15 @@
 
 Todas as mudanças relevantes serão documentadas neste arquivo.
 
+## [1.0.1] - 2026-05-12
+
+### Corrigido
+
+- QR Code do topo direito respeita a área do quadro e mantém margem interna.
+- Quadro `DADOS DO CT-E` no multimodal não invade mais a coluna do QR Code.
+- Campos de peso com unidade `KG` mantêm valor e unidade alinhados na mesma linha.
+- Título `IDENTIFICAÇÃO DO EMITENTE` fica centralizado quando o DACTE é gerado sem logo.
+
 ## [1.0.0] - 2026-05-08
 
 ### Adicionado

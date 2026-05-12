@@ -136,6 +136,30 @@ namespace Dacte.CTe.Core.Render
             }
         }
 
+        private void CampoComUnidade(RectangleF r, string label, string valor, string unidade)
+        {
+            const float paddingTop = 1.0F;
+            float paddingLeft = Math.Min(2.0F, Math.Max(0.65F, r.Width * 0.07F));
+            const float spacingLabelValor = 0.4F;
+            const float unidadeW = 7.0F;
+            const float gap = 0.65F;
+
+            var rL = new RectangleF(r.X + paddingLeft, r.Y + paddingTop, r.Width - 2F * paddingLeft, _fLabelMin.AlturaLinha);
+            if (!string.IsNullOrEmpty(label))
+                DrawStringFit(label.ToUpperInvariant(), rL, _fLabelMin, AlinhamentoHorizontal.Esquerda, AlinhamentoVertical.Topo, 3.9F);
+
+            if (string.IsNullOrWhiteSpace(valor))
+                return;
+
+            float yValor = r.Y + paddingTop + _fLabelMin.AlturaLinha + spacingLabelValor;
+            float hValor = Math.Max(0.5F, r.Bottom - yValor - paddingTop);
+            var rUnidade = new RectangleF(r.Right - paddingLeft - unidadeW, yValor, unidadeW, hValor);
+            var rValor = new RectangleF(r.X + paddingLeft, yValor, Math.Max(0.5F, rUnidade.X - r.X - paddingLeft - gap), hValor);
+
+            DrawStringFit(valor, rValor, _fValor, AlinhamentoHorizontal.Esquerda, AlinhamentoVertical.Centro, 4.1F);
+            DrawStringFit(unidade, rUnidade, _fValor, AlinhamentoHorizontal.Esquerda, AlinhamentoVertical.Centro, 4.1F);
+        }
+
         #endregion
 
         #region Quadros
@@ -172,9 +196,13 @@ namespace Dacte.CTe.Core.Render
             float dxTituloEmitente = rodoviario ? dxEmitente : 0.75F;
             float dyTituloEmitente = rodoviario ? 0.49F : 0.75F;
 
+            var rTituloEmitente = _logo == null
+                ? new RectangleF(r.X + 1F, r.Y + 0.5F + dyTituloEmitente, r.Width - 2F, 3.5F)
+                : new RectangleF(r.X + 34F + dxTituloEmitente, r.Y + 0.5F + dyTituloEmitente, r.Width - 34.5F, 3.5F);
+
             // Header label
             DrawStringFit("IDENTIFICA\u00C7\u00C3O DO EMITENTE",
-                            new RectangleF(r.X + 34F + dxTituloEmitente, r.Y + 0.5F + dyTituloEmitente, r.Width - 34.5F, 3.5F),
+                            rTituloEmitente,
                             _estilo.CriarFonteRegular(6.5F), AlinhamentoHorizontal.Centro, AlinhamentoVertical.Topo);
 
             float yTop = r.Y + 5.1F + (_vm.Modal == TipoModal.Multimodal ? 0.77F : 0.24F);
@@ -379,17 +407,16 @@ namespace Dacte.CTe.Core.Render
 
             _gfx.DrawLine(new PointF(r.X, yInfoFim), new PointF(r.Right, yInfoFim));
 
-            // QR Code (parte inferior da coluna MODAL). Mantemos margem
-            // interna para que o QR não toque a borda nem a linha superior
-            // do quadro adjacente. Tamanho efetivo é o mínimo entre largura
-            // da coluna e altura disponível, com 1.5mm de padding.
+            // QR Code (parte inferior da coluna MODAL). A quiet zone faz parte
+            // do símbolo e mantém os módulos pretos afastados das divisórias.
             if (!string.IsNullOrWhiteSpace(_vm.QrCodeUrl))
             {
-                var rQr = new RectangleF(r.X + 1.80F,
-                                         yInfoFim + 1.30F,
-                                         r.Width - 3.60F,
-                                         r.Bottom - yInfoFim - 2.60F);
-                DesenhaQrCode(rQr, _vm.QrCodeUrl, drawQuietZones: false);
+                const float qrPadding = 2.40F;
+                var rQr = new RectangleF(r.X + qrPadding,
+                                         yInfoFim + qrPadding,
+                                         r.Width - 2F * qrPadding,
+                                         r.Bottom - yInfoFim - 2F * qrPadding);
+                DesenhaQrCode(rQr, _vm.QrCodeUrl, drawQuietZones: true);
             }
         }
 
@@ -493,7 +520,8 @@ namespace Dacte.CTe.Core.Render
                                 new RectangleF(22.70F, rCfop.Y + 4.55F, rCfop.Right - 23.40F, rCfop.Height - 4.7F),
                                 _fValorBold, AlinhamentoHorizontal.Esquerda, AlinhamentoVertical.Centro);
 
-                var rDados = Rect(105.50F, 34.31F, 97.70F, 12.50F);
+                const float xModalMultimodal = 179.58F;
+                var rDados = Rect(105.50F, 34.31F, xModalMultimodal - 105.50F, 12.50F);
                 _gfx.DrawRoundedRectangle(rDados, 1.6F);
                 _gfx.DrawLine(new PointF(rDados.X, 40.23F), new PointF(rDados.Right, 40.23F));
                 DrawStringFit("DADOS DO CT-E",
@@ -888,14 +916,15 @@ namespace Dacte.CTe.Core.Render
                     if (i > 0) _gfx.DrawLine(new PointF(xPeso, yL2), new PointF(xPeso, r.Bottom));
                     float dxPeso = i == 0 ? 5.18F : 0F;
                     float dxValorPeso = i == 4 ? 10.20F : 0F;
-                    Campo(new RectangleF(xPeso + dxPeso, yL2, wPeso - dxPeso, hL2),
-                           labs2[i], vals2[i], AlinhamentoHorizontal.Esquerda,
-                           deslocXValor: dxValorPeso);
-                    if (i <= 2 && !string.IsNullOrWhiteSpace(vals2[i]))
+                    var rPeso = new RectangleF(xPeso + dxPeso, yL2, wPeso - dxPeso, hL2);
+                    if (i <= 2)
                     {
-                        DrawStringFit("KG",
-                                        new RectangleF(xPeso + wPeso - 8.2F, yL2 + 3.92F, 7F, 2.5F),
-                                        _fValor, AlinhamentoHorizontal.Esquerda, AlinhamentoVertical.Topo);
+                        CampoComUnidade(rPeso, labs2[i], vals2[i], "KG");
+                    }
+                    else
+                    {
+                        Campo(rPeso, labs2[i], vals2[i], AlinhamentoHorizontal.Esquerda,
+                              deslocXValor: dxValorPeso);
                     }
                     xPeso += wPeso;
                 }

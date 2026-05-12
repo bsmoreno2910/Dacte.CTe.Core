@@ -7,7 +7,7 @@
 
 Gerador de **DACTE** em PDF para **CT-e modelo 57** a partir do XML processado (`cteProc` v4.00).
 
-**Status:** estável (1.0.0) - geração de DACTE para CT-e modelo 57.
+**Status:** estável (1.0.1) - geração de DACTE para CT-e modelo 57.
 
 ## Instalação
 
