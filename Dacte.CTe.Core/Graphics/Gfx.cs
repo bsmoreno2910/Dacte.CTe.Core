@@ -139,40 +139,11 @@ namespace Dacte.CTe.Core.Graphics
             if (xobj == null) throw new ArgumentNullException(nameof(xobj));
             CheckRectangle(r);
 
-            // Tamanho do XImage em pontos (convertemos para mm).
-            SizeF xs = new SizeF((float)xobj.PointWidth.ToMm(), (float)xobj.PointHeight.ToMm());
-            PointF p = new PointF();
-            SizeF s = new SizeF();
-
-            if (r.Height >= r.Width)
-            {
-                if (xs.Height >= xs.Width)
-                {
-                    s.Height = r.Height;
-                    s.Width = (s.Height * xs.Width) / xs.Height;
-                }
-                else
-                {
-                    s.Width = r.Width;
-                    s.Height = (s.Width * xs.Height) / xs.Width;
-                }
-            }
-            else
-            {
-                if (xs.Height >= xs.Width)
-                {
-                    s.Width = r.Width;
-                    s.Height = (s.Width * xs.Height) / xs.Width;
-                }
-                else
-                {
-                    s.Height = r.Height;
-                    s.Width = (s.Height * xs.Width) / xs.Height;
-                }
-            }
-
-            p.X = r.X + Math.Abs(r.Width - s.Width) / 2F;
-            p.Y = r.Y + Math.Abs(r.Height - s.Height) / 2F;
+            var xs = new SizeF((float)xobj.PointWidth.ToMm(), (float)xobj.PointHeight.ToMm());
+            float escala = Math.Min(r.Width / xs.Width, r.Height / xs.Height);
+            var s = new SizeF(xs.Width * escala, xs.Height * escala);
+            var p = new PointF(r.X + (r.Width - s.Width) / 2F,
+                               r.Y + (r.Height - s.Height) / 2F);
 
             XGraphics.DrawImage(xobj,
                 new XRect(p.X.ToPoint(), p.Y.ToPoint(), s.Width.ToPoint(), s.Height.ToPoint()));

@@ -7,7 +7,7 @@
 
 Gerador de **DACTE** em PDF para **CT-e modelo 57** a partir do XML processado (`cteProc` v4.00).
 
-**Status:** estável (1.0.2) - geração de DACTE para CT-e modelo 57.
+**Status:** estável (1.0.3) - geração de DACTE para CT-e modelo 57.
 
 ## Instalação
 
@@ -44,6 +44,14 @@ using (var dacte = new DacteDoc(modelo))
     dacte.Salvar("dacte.pdf");
 }
 ```
+
+Para preservar a proporção original do logo:
+
+```csharp
+dacte.AdicionarLogoImagem("logo.png", ModoAjusteLogo.ConterProporcional);
+```
+
+O modo padrão é `ModoAjusteLogo.Preencher`, mantendo o comportamento visual das versões anteriores.
 
 Geração em memória:
 

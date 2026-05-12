@@ -29,6 +29,9 @@ namespace Dacte.CTe.Core
         private XImage _logoImage;
         private XImage _logoPdfForm;
 
+        /// <summary>Modo de encaixe usado ao desenhar o logo no cabeçalho.</summary>
+        public ModoAjusteLogo ModoAjusteLogo { get; set; } = ModoAjusteLogo.Preencher;
+
         public DacteDoc(DacteViewModel viewModel)
         {
             ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
@@ -52,10 +55,22 @@ namespace Dacte.CTe.Core
             _logoImage = XImage.FromStream(() => stream);
         }
 
+        public void AdicionarLogoImagem(Stream stream, ModoAjusteLogo modoAjuste)
+        {
+            ModoAjusteLogo = modoAjuste;
+            AdicionarLogoImagem(stream);
+        }
+
         public void AdicionarLogoImagem(string path)
         {
             if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException(nameof(path));
             _logoImage = XImage.FromFile(path);
+        }
+
+        public void AdicionarLogoImagem(string path, ModoAjusteLogo modoAjuste)
+        {
+            ModoAjusteLogo = modoAjuste;
+            AdicionarLogoImagem(path);
         }
 
         /// <summary>Logo a partir da primeira página de um PDF (logo vetorial).</summary>
@@ -65,10 +80,22 @@ namespace Dacte.CTe.Core
             _logoPdfForm = XImage.FromStream(() => stream);
         }
 
+        public void AdicionarLogoPdf(Stream stream, ModoAjusteLogo modoAjuste)
+        {
+            ModoAjusteLogo = modoAjuste;
+            AdicionarLogoPdf(stream);
+        }
+
         public void AdicionarLogoPdf(string path)
         {
             if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException(nameof(path));
             _logoPdfForm = XImage.FromFile(path);
+        }
+
+        public void AdicionarLogoPdf(string path, ModoAjusteLogo modoAjuste)
+        {
+            ModoAjusteLogo = modoAjuste;
+            AdicionarLogoPdf(path);
         }
 
         private void AdicionarMetadata()
@@ -100,7 +127,7 @@ namespace Dacte.CTe.Core
             {
                 var gfx = new Gfx(xg);
                 var logo = _logoPdfForm ?? _logoImage;
-                var renderer = new DacteRenderer(ViewModel, gfx, EstiloPadrao, logo);
+                var renderer = new DacteRenderer(ViewModel, gfx, EstiloPadrao, logo, ModoAjusteLogo);
                 renderer.Render();
             }
 

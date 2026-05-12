@@ -23,6 +23,7 @@ namespace Dacte.CTe.Core.Render
         private readonly Gfx _gfx;
         private readonly Estilo _estilo;
         private readonly XImage _logo;
+        private readonly ModoAjusteLogo _modoAjusteLogo;
 
         // Fontes pré-criadas (reutilizadas em vários quadros).
         private readonly Fonte _fLabel;       // labels de campo (4.5pt, negrito)
@@ -35,12 +36,13 @@ namespace Dacte.CTe.Core.Render
         private readonly Fonte _fCabecalhoBl; // "COMPONENTES DO VALOR..." (5.5pt negrito)
         private readonly Fonte _fEmitNome;    // razão social emitente (8pt negrito)
 
-        public DacteRenderer(DacteViewModel vm, Gfx gfx, Estilo estilo, XImage logo = null)
+        public DacteRenderer(DacteViewModel vm, Gfx gfx, Estilo estilo, XImage logo = null, ModoAjusteLogo modoAjusteLogo = ModoAjusteLogo.Preencher)
         {
             _vm = vm ?? throw new ArgumentNullException(nameof(vm));
             _gfx = gfx ?? throw new ArgumentNullException(nameof(gfx));
             _estilo = estilo ?? throw new ArgumentNullException(nameof(estilo));
             _logo = logo;
+            _modoAjusteLogo = modoAjusteLogo;
 
             _fLabel       = _estilo.CriarFonteNegrito(4.5F);
             _fLabelMin    = _estilo.CriarFonteNegrito(4.5F);
@@ -216,7 +218,10 @@ namespace Dacte.CTe.Core.Render
                 var rLogo = _vm.Modal == TipoModal.Multimodal
                     ? new RectangleF(11.36F, 12.35F, 28.84F, 7.93F)
                     : new RectangleF(9.24F, 10.23F, 29.64F, 11.38F);
-                _gfx.ShowXObjectStretch(_logo, rLogo);
+                if (_modoAjusteLogo == ModoAjusteLogo.ConterProporcional)
+                    _gfx.ShowXObject(_logo, rLogo);
+                else
+                    _gfx.ShowXObjectStretch(_logo, rLogo);
                 xTexto = r.X + wLogo + 1F + (_vm.Modal == TipoModal.Multimodal ? 0.76F : 0F);
             }
 

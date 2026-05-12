@@ -6,9 +6,9 @@
 
     <!-- Identidade do pacote -->
     <PackageId>Dacte.CTe.Core</PackageId>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
 
     <!-- Metadata -->
     <Authors>Bruno Moreno (bsmoreno2910)</Authors>
@@ -17,7 +17,7 @@
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <Description>Gerador de DACTE (Documento Auxiliar do Conhecimento de Transporte Eletrônico) modelo 57 em PDF a partir do XML do CT-e. Usa PdfSharpCore. Compatível com .NET Standard 2.0 e .NET 8. Suporta os modais rodoviário, aéreo, aquaviário, ferroviário, dutoviário e multimodal.</Description>
     <PackageTags>dacte;cte;cte-os;conhecimento-transporte-eletronico;pdf;pdfsharpcore;brasil;fiscal</PackageTags>
-    <PackageReleaseNotes>v1.0.2 - Ajuste fino de alinhamento entre o quadro DADOS DO CT-E e a coluna do QR Code no layout multimodal.</PackageReleaseNotes>
+    <PackageReleaseNotes>v1.0.3 - Adiciona modos de ajuste do logo, mantendo o comportamento padrão anterior e oferecendo encaixe proporcional opcional.</PackageReleaseNotes>
 
     <!-- Links -->
     <PackageProjectUrl>https://github.com/bsmoreno2910/Dacte.CTe.Core</PackageProjectUrl>

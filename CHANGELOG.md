@@ -2,6 +2,14 @@
 
 Todas as mudanças relevantes serão documentadas neste arquivo.
 
+## [1.0.3] - 2026-05-12
+
+### Adicionado
+- Modo de ajuste do logo com `ModoAjusteLogo.Preencher` e `ModoAjusteLogo.ConterProporcional`.
+
+### Corrigido
+- Encaixe proporcional de imagens para evitar distorção quando o modo proporcional for usado.
+
 ## [1.0.2] - 2026-05-12
 
 ### Corrigido
