@@ -2,6 +2,11 @@
 
 Todas as mudanças relevantes serão documentadas neste arquivo.
 
+## [1.0.2] - 2026-05-12
+
+### Corrigido
+- Ajuste fino de alinhamento entre o quadro `DADOS DO CT-E` e a coluna do QR Code no layout multimodal.
+
 ## [1.0.1] - 2026-05-12
 
 ### Corrigido

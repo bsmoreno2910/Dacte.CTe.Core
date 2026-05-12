@@ -178,8 +178,9 @@ namespace Dacte.CTe.Core.Render
 
             float hEmitenteTopo = _vm.Modal == TipoModal.Rodoviario ? 24.10F : H_TOPO_EMIT;
             var rEmitente = new RectangleF(xCol1, r.Y, xCol2 - xCol1, hEmitenteTopo);
-            var rDacte = new RectangleF(xCol2, r.Y, xCol3 - xCol2, r.Height);
-            var rModal = new RectangleF(xCol3, r.Y, xRight - xCol3, r.Height);
+            float hDacteModal = _vm.Modal == TipoModal.Multimodal ? 42.31F : r.Height;
+            var rDacte = new RectangleF(xCol2, r.Y, xCol3 - xCol2, hDacteModal);
+            var rModal = new RectangleF(xCol3, r.Y, xRight - xCol3, hDacteModal);
             _gfx.DrawRoundedRectangle(rEmitente, raioTopo);
             _gfx.DrawRoundedRectangle(rDacte, raioTopo);
             _gfx.DrawRoundedRectangle(rModal, raioTopo);
@@ -508,7 +509,7 @@ namespace Dacte.CTe.Core.Render
         {
             if (_vm.Modal == TipoModal.Multimodal)
             {
-                var rCfop = Rect(7.07F, 37.41F, 98.28F, 9.40F);
+                var rCfop = Rect(7.07F, 37.41F, 105.50F - 7.07F, 9.40F);
                 _gfx.DrawRoundedRectangle(rCfop, 1.6F);
                 DrawStringFit("CFOP. NATUREZA DA PRESTACAO",
                                 new RectangleF(rCfop.X + 2.54F, rCfop.Y + 1.55F, rCfop.Width - 3.2F, _fLabelMin.AlturaLinha),
@@ -522,7 +523,7 @@ namespace Dacte.CTe.Core.Render
 
                 const float xModalMultimodal = 179.58F;
                 var rDados = Rect(105.50F, 34.31F, xModalMultimodal - 105.50F, 12.50F);
-                _gfx.DrawRoundedRectangle(rDados, 1.6F);
+                _gfx.DrawLine(new PointF(rDados.X, rDados.Y), new PointF(rDados.Right, rDados.Y));
                 _gfx.DrawLine(new PointF(rDados.X, 40.23F), new PointF(rDados.Right, 40.23F));
                 DrawStringFit("DADOS DO CT-E",
                                 new RectangleF(rDados.X + 1.90F, rDados.Y + 1.30F, rDados.Width - 3.2F, _fLabelMin.AlturaLinha),
